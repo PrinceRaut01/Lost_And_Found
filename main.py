@@ -8,7 +8,7 @@ from tkinter import messagebox
 from db_connection import get_db_connection, get_resource_path
 
 
-# ─── Utilities ────────────────────────────────────────────────────────────────
+# Utilities
 
 def _center(win, w, h):
     win.update_idletasks()
@@ -74,17 +74,37 @@ def _initialize_db():
     try:
         with get_db_connection() as conn:
             cur = conn.cursor()
+            # Add missing columns to older databases
             for col_def in ("phone TEXT", "user_type TEXT DEFAULT 'user'"):
                 try:
                     cur.execute(f"ALTER TABLE users ADD COLUMN {col_def}")
                 except sqlite3.OperationalError:
                     pass
+            # Migrate any remaining plain-text admin passwords to pbkdf2
+            cur.execute(
+                "SELECT id, password FROM users WHERE user_type='admin'"
+            )
+            for row_id, pw in cur.fetchall():
+                if pw and not pw.startswith("pbkdf2:"):
+                    cur.execute(
+                        "UPDATE users SET password=? WHERE id=?",
+                        (_hash_password(pw), row_id),
+                    )
+            # Seed a default admin account if no admin exists at all
+            cur.execute("SELECT COUNT(*) FROM users WHERE user_type='admin'")
+            if cur.fetchone()[0] == 0:
+                cur.execute(
+                    "INSERT INTO users (username,password,full_name,email,phone,user_type)"
+                    " VALUES (?,?,?,?,?,?)",
+                    ("admin", _hash_password("admin@123"),
+                     "Administrator", "", "", "admin"),
+                )
             conn.commit()
     except sqlite3.Error as e:
         print(f"Database init error: {e}")
 
 
-# ── Original gradient formulas (same as the original files) ──────────────────
+# Original gradient formulas
 
 def _login_grad(i, h):
     """Original get_gradient_color formula, scaled to actual window height."""
@@ -105,7 +125,7 @@ def _reg_grad(i, h):
     return f'#{r:02x}{g:02x}{b:02x}'
 
 
-# ─── App controller ───────────────────────────────────────────────────────────
+# App controller
 
 class App:
     def __init__(self):
@@ -151,14 +171,34 @@ class App:
     def show_admin(self, username: str):
         self._clear()
         self.root.title("Lost & Found - Admin Control Panel")
-        from admin_page import AdminPage
-        AdminPage(self.container, self, username).pack(fill=BOTH, expand=True)
+        try:
+            from admin_page import AdminPage
+            page = AdminPage(self.container, self, username)
+            page.pack(fill=BOTH, expand=True)
+            self.container.update_idletasks()
+        except Exception as exc:
+            import traceback
+            traceback.print_exc()
+            messagebox.showerror("Error",
+                f"Admin Panel failed to load:\n{exc}",
+                parent=self.root)
+            self.show_login()
 
     def show_user(self, username: str):
         self._clear()
         self.root.title("Lost & Found - Welcome User")
-        from user_page import UserPage
-        UserPage(self.container, self, username).pack(fill=BOTH, expand=True)
+        try:
+            from user_page import UserPage
+            page = UserPage(self.container, self, username)
+            page.pack(fill=BOTH, expand=True)
+            self.container.update_idletasks()
+        except Exception as exc:
+            import traceback
+            traceback.print_exc()
+            messagebox.showerror("Error",
+                f"User Panel failed to load:\n{exc}",
+                parent=self.root)
+            self.show_login()
 
     def logout(self):
         self.current_user = None
@@ -166,7 +206,7 @@ class App:
         self.show_login()
 
 
-# ─── Login page ───────────────────────────────────────────────────────────────
+# Login page
 # Visual design is 100% faithful to the original main.py canvas-based layout.
 # Responsiveness is added via <Configure> binding that scales all positions
 # proportionally from the original 1100×600 reference design.
@@ -316,10 +356,11 @@ class LoginPage(Frame):
         user_type = _authenticate(username, password)
         if user_type:
             self.app.current_user = username
-            self.app.current_user_type = user_type
+            role = str(user_type).strip().lower()
+            self.app.current_user_type = role
             messagebox.showinfo("Success",
                 f"Welcome back, {username}!", parent=self.app.root)
-            if user_type == 'admin':
+            if role == 'admin':
                 self.app.show_admin(username)
             else:
                 self.app.show_user(username)
@@ -430,7 +471,7 @@ class LoginPage(Frame):
             ))
 
 
-# ─── Register modal ───────────────────────────────────────────────────────────
+# Register modal
 # Visual design is 100% faithful to the original register_user() Toplevel.
 # Same gradient, same fonts, same labels, same button colours.
 # Fixed: canvas positions are now proportional so the window can be resized.

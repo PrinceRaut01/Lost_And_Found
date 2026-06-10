@@ -26,6 +26,8 @@ if (-not (Test-Path $IconPath) -or ((Get-Item $IconPath).Length -eq 0)) {
     & $PythonExe $Generator
 }
 
+$VersionFile = Join-Path $Root 'version_info.txt'
+
 $PyInstallerArgs = @(
     '--noconfirm',
     '--clean',
@@ -36,6 +38,7 @@ $PyInstallerArgs = @(
     '--add-data', "$IconPath;assets",
     '--hidden-import', 'admin_page',
     '--hidden-import', 'user_page',
+    '--version-file', $VersionFile,
     '--distpath', $DistDir,
     '--workpath', $BuildDir,
     '--specpath', $BuildDir,

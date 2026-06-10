@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['..\\main.py'],
+    ['C:\\Users\\princ\\Downloads\\Lost_and_Found_Desk-App\\main.py'],
     pathex=[],
     binaries=[],
     datas=[('C:\\Users\\princ\\Downloads\\Lost_and_Found_Desk-App\\assets\\icon.ico', 'assets')],
@@ -35,5 +35,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    version='C:\\Users\\princ\\Downloads\\Lost_and_Found_Desk-App\\version_info.txt',
     icon=['C:\\Users\\princ\\Downloads\\Lost_and_Found_Desk-App\\assets\\icon.ico'],
 )

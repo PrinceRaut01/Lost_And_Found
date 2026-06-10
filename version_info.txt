@@ -1,0 +1,36 @@
+# UTF-8
+# PyInstaller version resource file
+# Embeds Windows VERSIONINFO into the compiled EXE so Explorer,
+# Task Manager, and SmartScreen can read proper publisher metadata.
+
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(2, 0, 0, 0),
+    prodvers=(2, 0, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,       # VOS_NT_WINDOWS32
+    fileType=0x1,     # VFT_APP
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo([
+      StringTable(
+        '040904B0',   # US English + Unicode
+        [
+          StringStruct('CompanyName',      'TEAM DOBERMAN'),
+          StringStruct('FileDescription',  'Lost and Found Desk - Item Management System'),
+          StringStruct('FileVersion',      '2.0.0.0'),
+          StringStruct('InternalName',     'LostAndFoundDesk'),
+          StringStruct('LegalCopyright',   'Copyright (C) 2025 TEAM DOBERMAN. All rights reserved.'),
+          StringStruct('OriginalFilename', 'LostAndFoundDesk.exe'),
+          StringStruct('ProductName',      'Lost and Found Desk'),
+          StringStruct('ProductVersion',   '2.0.0.0'),
+          StringStruct('Comments',         'Connecting what is lost with those who are looking.'),
+        ]
+      )
+    ]),
+    VarFileInfo([VarStruct('Translation', [1033, 1200])])
+  ]
+)

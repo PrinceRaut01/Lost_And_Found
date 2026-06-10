@@ -1,41 +1,113 @@
-#define MyAppName "Lost & Found Desk"
-#define MyAppVersion "1.0.0"
-#define MyAppPublisher "TEAM DOBERMAN"
-#define MyAppExeName "LostAndFoundDesk.exe"
+; ============================================================
+;  Lost and Found Desk  –  Inno Setup installer script
+;  Built by TEAM DOBERMAN
+; ============================================================
 
+#define MyAppName        "Lost and Found Desk"
+#define MyAppVersion     "2.0.0"
+#define MyAppPublisher   "TEAM DOBERMAN"
+#define MyAppURL         "https://github.com/PrinceRaut01"
+#define MyAppExeName     "LostAndFoundDesk.exe"
+#define MyAppCopyright   "Copyright (C) 2025 TEAM DOBERMAN. All rights reserved."
+#define MyAppDescription "Lost and Found Item Management System"
+
+; ── Unique application GUID (never change this after first release) ──────────
 [Setup]
-AppId={{3C35C44A-1D29-4F99-9A8E-8F1B2E1A2E8A}}
+AppId={{3C35C44A-1D29-4F99-9A8E-8F1B2E1A2E8A}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-DefaultDirName={autopf}\Lost And Found Desk
+AppPublisherURL={#MyAppURL}
+AppSupportURL={#MyAppURL}
+AppUpdatesURL={#MyAppURL}
+AppCopyright={#MyAppCopyright}
+AppComments={#MyAppDescription}
+
+; ── Version resource embedded in the Setup EXE ───────────────────────────────
+VersionInfoVersion={#MyAppVersion}.0
+VersionInfoCompany={#MyAppPublisher}
+VersionInfoDescription={#MyAppDescription} Setup
+VersionInfoCopyright={#MyAppCopyright}
+VersionInfoProductName={#MyAppName}
+VersionInfoProductVersion={#MyAppVersion}.0
+VersionInfoOriginalFileName=LostAndFoundDesk_Setup.exe
+
+; ── Install location – Program Files (requires admin) ────────────────────────
+DefaultDirName={autopf}\Lost and Found Desk
 DefaultGroupName={#MyAppName}
+PrivilegesRequired=admin
+PrivilegesRequiredOverridesAllowed=commandline
+
+; ── Output ───────────────────────────────────────────────────────────────────
 OutputDir=..\release
 OutputBaseFilename=LostAndFoundDesk_Setup
 SetupIconFile=..\assets\icon.ico
+UninstallDisplayIcon={app}\{#MyAppExeName}
+UninstallDisplayName={#MyAppName}
+
+; ── Compression ──────────────────────────────────────────────────────────────
 Compression=lzma2/ultra
 SolidCompression=yes
+LZMAUseSeparateProcess=yes
+
+; ── Wizard UI ────────────────────────────────────────────────────────────────
 WizardStyle=modern
+DisableProgramGroupPage=no
+AllowNoIcons=no
+CloseApplications=yes
+ShowLanguageDialog=no
+
+; ── Architecture ─────────────────────────────────────────────────────────────
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64os
-PrivilegesRequired=lowest
-DisableProgramGroupPage=no
-UninstallDisplayIcon={app}\{#MyAppExeName}
-CloseApplications=yes
-AllowNoIcons=no
 
+; ── Languages ────────────────────────────────────────────────────────────────
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
+; ── Optional tasks ───────────────────────────────────────────────────────────
 [Tasks]
-Name: "desktopicon"; Description: "Create a &desktop shortcut"; GroupDescription: "Additional icons:"; Flags: unchecked
+Name: "desktopicon"; \
+  Description: "Create a &desktop shortcut"; \
+  GroupDescription: "Additional icons:"; \
+  Flags: checkedonce
 
+; ── Files ─────────────────────────────────────────────────────────────────────
 [Files]
-Source: "..\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+; Always ships the fixed EXE from release\ (not dist\)
+Source: "..\release\{#MyAppExeName}"; \
+  DestDir: "{app}"; \
+  Flags: ignoreversion
 
+; ── Registry – app path for "Open with" and other Windows associations ────────
+[Registry]
+Root: HKLM; Subkey: "Software\TEAM DOBERMAN\Lost and Found Desk"; \
+  ValueType: string; ValueName: "InstallDir"; ValueData: "{app}"; \
+  Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\TEAM DOBERMAN\Lost and Found Desk"; \
+  ValueType: string; ValueName: "Version"; ValueData: "{#MyAppVersion}"; \
+  Flags: uninsdeletekey
+
+; ── Shortcuts ────────────────────────────────────────────────────────────────
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+; Start Menu
+Name: "{group}\{#MyAppName}"; \
+  Filename: "{app}\{#MyAppExeName}"; \
+  IconFilename: "{app}\{#MyAppExeName}"; \
+  Comment: "{#MyAppDescription}"
+Name: "{group}\Uninstall {#MyAppName}"; \
+  Filename: "{uninstallexe}"
 
+; Desktop (only if task selected)
+Name: "{autodesktop}\{#MyAppName}"; \
+  Filename: "{app}\{#MyAppExeName}"; \
+  IconFilename: "{app}\{#MyAppExeName}"; \
+  Comment: "{#MyAppDescription}"; \
+  Tasks: desktopicon
+
+; ── Post-install run ─────────────────────────────────────────────────────────
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "Launch {#MyAppName}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; \
+  Description: "Launch {#MyAppName} now"; \
+  Flags: nowait postinstall skipifsilent
