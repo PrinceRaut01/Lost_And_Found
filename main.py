@@ -249,7 +249,7 @@ class LoginPage(Frame):
             text="Powered by TEAM DOBERMAN",
             font=("Open Sans", 11), fill="#000000", anchor="center")
         self._foot3_id = self._c.create_text(0, 0,
-            text="© 2025 All rights reserved",
+            text="© 2026 All rights reserved",
             font=("Open Sans", 11), fill="#000000", anchor="center")
 
         # Form widgets
