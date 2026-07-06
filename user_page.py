@@ -31,10 +31,10 @@ class UserPage(Frame):
     def _root(self):
         return self.app.root
 
-    # ── Main layout ───────────────────────────────────────────────────────────
+    # Main layout
 
     def _build(self):
-        # ── Header – original: height=80, Arial 20 bold, bg="#4A9EFF" ─────────
+        # Header
         self._header_frame = Frame(self, bg="#4A9EFF", height=80)
         self._header_frame.pack(fill=X)
         self._header_frame.pack_propagate(False)
@@ -50,7 +50,7 @@ class UserPage(Frame):
                relief="flat", command=self.app.logout
                ).pack(side=RIGHT, pady=20, padx=10)
 
-        # ── Button frame – original: height=80 ────────────────────────────────
+        # Button frame
         self._btn_frame = Frame(self, bg="white", height=80)
         self._btn_frame.pack(fill=X, padx=20, pady=5)
         self._btn_frame.pack_propagate(False)
@@ -72,7 +72,7 @@ class UserPage(Frame):
                command=self._refresh_table
                ).pack(side=LEFT, padx=10, pady=10)
 
-        # ── Search frame – original: height=60 ───────────────────────────────
+        # Search frame
         self._search_frame = Frame(self, bg="white", height=60)
         self._search_frame.pack(fill=X, pady=5)
         self._search_frame.pack_propagate(False)
@@ -97,7 +97,7 @@ class UserPage(Frame):
                command=self._advanced_search
                ).pack(side=LEFT, padx=(0, 10), pady=10)
 
-        # ── Table frame – original: padx=50, pady=(0,50) ─────────────────────
+        # Table frame
         self._table_frame = Frame(self, bg="white")
         self._table_frame.pack(fill=BOTH, expand=True, padx=50, pady=(0, 50))
 
@@ -117,7 +117,7 @@ class UserPage(Frame):
 
         self._load_items()
 
-    # ── Data loading ──────────────────────────────────────────────────────────
+    # Data loading
 
     def _load_items(self, search_term="", filters=None):
         for item in self._tree.get_children():
@@ -209,7 +209,7 @@ class UserPage(Frame):
         messagebox.showinfo("Refresh", "Table refreshed successfully!",
                              parent=self._root())
 
-    # ── Report Lost Item modal (original layout) ──────────────────────────────
+    # Report Lost Item modal
 
     def _report_lost_item(self):
         if self._report_lost_win is not None and self._report_lost_win.winfo_exists():
@@ -317,7 +317,7 @@ class UserPage(Frame):
                bg="#dc3545", fg="white", width=12,
                command=on_closing).place(x=350, y=y_pos)
 
-    # ── Report Found Item modal ───────────────────────────────────────────────
+    # Report Found Item modal
 
     def _report_found_item(self):
         if self._report_found_win is not None and self._report_found_win.winfo_exists():
@@ -425,7 +425,7 @@ class UserPage(Frame):
                bg="#dc3545", fg="white", width=12,
                command=on_closing).place(x=350, y=y_pos)
 
-    # ── Advanced Search modal ─────────────────────────────────────────────────
+    # Advanced Search modal
 
     def _advanced_search(self):
         if self._adv_search_win is not None and self._adv_search_win.winfo_exists():

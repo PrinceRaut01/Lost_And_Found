@@ -32,10 +32,10 @@ class AdminPage(Frame):
     def _root(self):
         return self.app.root
 
-    # ── Main layout ───────────────────────────────────────────────────────────
+    # Main layout
 
     def _build(self):
-        # ── Header – exact original: height=80, Arial 20 bold, #2196F3 ────────
+        # Header
         self._header_frame = Frame(self, bg="#2196F3", height=80)
         self._header_frame.pack(fill=X)
         self._header_frame.pack_propagate(False)
@@ -60,7 +60,7 @@ class AdminPage(Frame):
             command=self._toggle_dark_mode)
         self._dark_mode_btn.pack(side=RIGHT, pady=20, padx=20)
 
-        # ── Notebook – original: clam, Arial 12 bold, padding [20,10] ─────────
+        # Notebook
         self._notebook = ttk.Notebook(self)
         self._notebook.pack(fill=BOTH, expand=True, padx=10, pady=10)
 
@@ -80,7 +80,7 @@ class AdminPage(Frame):
         self._build_users_tab()
         self._build_reports_tab()
 
-    # ── Items tab ─────────────────────────────────────────────────────────────
+    # Items tab
 
     def _build_items_tab(self):
         # Original: action_frame height=80
@@ -152,7 +152,7 @@ class AdminPage(Frame):
         messagebox.showinfo("Refresh", "Table refreshed successfully!",
                              parent=self._root())
 
-    # ── Add Lost Item modal (original layout restored) ────────────────────────
+    # Add Lost Item modal
 
     def _add_lost_item(self):
         if self._add_lost_win is not None and self._add_lost_win.winfo_exists():
@@ -259,7 +259,7 @@ class AdminPage(Frame):
                bg="#dc3545", fg="white", width=12,
                command=on_closing).place(x=350, y=y_pos)
 
-    # ── Add Found Item modal ──────────────────────────────────────────────────
+    # Add Found Item modal
 
     def _add_found_item(self):
         if self._add_found_win is not None and self._add_found_win.winfo_exists():
@@ -365,7 +365,7 @@ class AdminPage(Frame):
                bg="#dc3545", fg="white", width=12,
                command=on_closing).place(x=350, y=y_pos)
 
-    # ── Users tab ─────────────────────────────────────────────────────────────
+    # Users tab
 
     def _build_users_tab(self):
         # Original: action frame height=80
@@ -438,7 +438,7 @@ class AdminPage(Frame):
         except Exception as e:
             messagebox.showerror("Database Error", str(e), parent=self._root())
 
-    # ── Edit User modal (original layout restored) ────────────────────────────
+    # Edit User modal
 
     def _edit_user(self):
         selected = self._users_tree.selection()
@@ -572,7 +572,7 @@ class AdminPage(Frame):
                bg="#dc3545", fg="white", width=12,
                command=on_closing).place(x=350, y=y_pos)
 
-    # ── Reports tab ───────────────────────────────────────────────────────────
+    # Reports tab
 
     def _build_reports_tab(self):
         # Original: reports_content with padx=50, pady=50
@@ -612,7 +612,7 @@ class AdminPage(Frame):
         except Exception as e:
             self._stats_label.config(text="Error loading stats: " + str(e))
 
-    # ── Dark mode toggle (same widgets as original) ───────────────────────────
+    # Dark mode toggle
 
     def _toggle_dark_mode(self):
         self._dark = not self._dark

@@ -231,7 +231,7 @@ class LoginPage(Frame):
         self._c = Canvas(self, highlightthickness=0)
         self._c.place(x=0, y=0, relwidth=1, relheight=1)
 
-        # ── Canvas text items (same fonts as original) ────────────────────────
+        # Canvas text items
         # Original: Impact 35 bold at y=90
         self._title_id = self._c.create_text(0, 0, text="",
             font=("Impact", 35, "bold"), fill="white", anchor="center")
@@ -252,7 +252,7 @@ class LoginPage(Frame):
             text="© 2025 All rights reserved",
             font=("Open Sans", 11), fill="#000000", anchor="center")
 
-        # ── Form widgets via canvas.create_window (same as original) ─────────
+        # Form widgets
         # Original: Label Calibri 14, white text, bg = gradient colour at that y
         self._ul = Label(self, text="Username",
                          font=("Calibri", 14), fg="white")
@@ -292,7 +292,7 @@ class LoginPage(Frame):
         self.bind("<Configure>", self._on_resize)
         self.after(100, self._start_animations)
 
-    # ── Resize handler – repositions everything proportionally ────────────────
+    # Resize handler
     def _on_resize(self, event=None):
         if event and event.widget is not self:
             return
@@ -344,7 +344,7 @@ class LoginPage(Frame):
         self._c.coords(self._lbtn_id, ex, int(h * 430 / 600))
         self._c.coords(self._rbtn_id, ex, int(h * 480 / 600))
 
-    # ── Login handler ─────────────────────────────────────────────────────────
+    # Login handler
     def _handle_login(self):
         username = self._username_entry.get().strip()
         password = self._password_entry.get()
@@ -369,7 +369,7 @@ class LoginPage(Frame):
                 parent=self.app.root)
             self._password_entry.delete(0, END)
 
-    # ── Animations (ported from original, using self.after / self._c) ─────────
+    # Animations
     def _start_animations(self):
         self._typewriter(
             "Lost & Found Desktop App", self._title_id, delay=100,
@@ -497,7 +497,7 @@ class RegisterModal(Toplevel):
             text="User Registration",
             font=("Impact", 30), fill="white", anchor="center")
 
-        # ── Build form widgets (same styling as original) ─────────────────────
+        # Build form widgets
         def _lbl(text, bg):
             return Label(self, text=text, font=("Arial", 12, "bold"),
                          fg="white", bg=bg)
