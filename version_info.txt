@@ -23,7 +23,7 @@ VSVersionInfo(
           StringStruct('FileDescription',  'Lost and Found Desk - Item Management System'),
           StringStruct('FileVersion',      '2.0.0.0'),
           StringStruct('InternalName',     'LostAndFoundDesk'),
-          StringStruct('LegalCopyright',   'Copyright (C) 2025 TEAM DOBERMAN. All rights reserved.'),
+          StringStruct('LegalCopyright',   'Copyright (C) 2026 TEAM DOBERMAN. All rights reserved.'),
           StringStruct('OriginalFilename', 'LostAndFoundDesk.exe'),
           StringStruct('ProductName',      'Lost and Found Desk'),
           StringStruct('ProductVersion',   '2.0.0.0'),

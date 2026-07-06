@@ -8,7 +8,7 @@
 #define MyAppPublisher   "TEAM DOBERMAN"
 #define MyAppURL         "https://github.com/PrinceRaut01"
 #define MyAppExeName     "LostAndFoundDesk.exe"
-#define MyAppCopyright   "Copyright (C) 2025 TEAM DOBERMAN. All rights reserved."
+#define MyAppCopyright   "Copyright (C) 2026 TEAM DOBERMAN. All rights reserved."
 #define MyAppDescription "Lost and Found Item Management System"
 
 ; ── Unique application GUID (never change this after first release) ──────────
